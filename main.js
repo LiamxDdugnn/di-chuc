@@ -2,7 +2,7 @@
 var letterContent =" Ba năm học trôi qua với biết bao kỷ niệm cùng mọi người, từ những giờ học sôi nổi đến những lần vui đùa vô tư. Nhưng với tôi, tất cả chỉ là những điều thoáng qua, không níu giữ, không khắc sâu. Tôi chẳng tìm thấy điều gì để lưu luyến hay hoài niệm. Người ta trân trọng quá khứ, còn tôi chỉ muốn bước tiếp, để mọi thứ ngủ yên như nó vốn dĩ. Hãy quên tôi đi, như chưa từng có tôi trong những ký ức ấy, như một cơn gió thoảng qua không để lại dấu vết gì🫀."
 
 // Tốc độ viết chữ. Số càng nhỏ tốc độ càng nhanh. 50 là tốc độ khá phù hợp
-durationWrite = 50 
+durationWrite = 45 
 
 // Hiệu ứng gõ chữ
 
