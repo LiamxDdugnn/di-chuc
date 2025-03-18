@@ -38,7 +38,7 @@
                 <div class="cloudBtn"></div>
                 <button class="openBtn">Chạm vào đây đii</button>
             </div>
-            <audio controls autoplay muted>
+        
                     <audio src="music.mp3" type="audio/mp3"<audio>
         </div>
 
@@ -64,6 +64,13 @@
         </div>
     </div>
     <script src="./main.js"></script>
-</body>
+ <script src="./script.js"></script>
+    <script>
+        document.body.addEventListener("click", function() {
+             var audio = document.getElementById("audio");
+             audio.play();
+         });
+     </script>
+                    </body>
 
 </html>
