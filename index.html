@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gửi đến người đặc biệt ❤️</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+    }
+    h1 {
+      color: #ff00ff;
+      font-size: 2.5em;
+      margin-top: 100px;
+      animation: glow 2s infinite alternate;
+    }
+    p {
+      font-size: 1.3em;
+      margin: 20px;
+      color: #fff;
+    }
+    .heart {
+      color: red;
+      animation: pulse 1s infinite;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff00ff; }
+      to { text-shadow: 0 0 30px #ff00ff; }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Liam <span class="heart">♥</span> MuaDongTokyo</h1>
+  <p>Cảm ơn vì em đã đến trong cuộc đời anh 🌟</p>
+  <p>Anh sẽ luôn bên cạnh em, dù bất cứ chuyện gì xảy ra ❤️</p>
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ âm thanh.
+  </audio>
+</body>
+</html>
