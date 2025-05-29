@@ -2,56 +2,44 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <title>Love Slide ♥</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quân ♥ Phương</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
+      background: black;
+      font-family: 'Courier New', monospace;
       overflow: hidden;
-      background-color: black;
-      font-family: 'Courier New', Courier, monospace;
-      color: #fff;
-      text-align: center;
     }
 
-    .container {
+    .slide {
+      width: 100vw;
+      height: 100vh;
       position: absolute;
-      width: 100%;
-      height: 100%;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
+      color: #fff;
+      font-size: 2em;
+      text-align: center;
+      transition: transform 0.8s ease;
       padding: 20px;
-      box-sizing: border-box;
-      transition: transform 0.6s ease-in-out;
     }
 
-    h1 {
-      font-size: 2.5em;
-      color: magenta;
-      animation: glow 2s infinite alternate;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.3em;
-      color: white;
-      max-width: 80%;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #ff00ff; }
-      to { text-shadow: 0 0 30px #ff00ff; }
+    .slide.hidden {
+      opacity: 0;
+      transform: translateY(100%);
     }
 
     .falling-char {
       position: absolute;
-      top: -40px;
-      font-size: 20px;
+      top: -50px;
       color: pink;
+      font-size: 20px;
       animation: fall linear forwards;
+      pointer-events: none;
     }
 
     @keyframes fall {
@@ -64,71 +52,64 @@
 </head>
 <body>
 
-  <!-- Nội dung từng trang -->
-  <div class="container" id="page">
-    <h1>Quân ♥ Phương</h1>
-    <p id="text">Cảm ơn vì em đã đến 💖</p>
-  </div>
+  <!-- Danh sách các câu yêu thương -->
+  <div class="slide" id="slide0">Cảm ơn vì em đã đến 💖</div>
+  <div class="slide hidden" id="slide1">Anh sẽ luôn bên cạnh em 💑</div>
+  <div class="slide hidden" id="slide2">Mỗi ngày bên em là một ngày hạnh phúc 🌈</div>
+  <div class="slide hidden" id="slide3">Yêu em hơn hôm qua nhưng không bằng ngày mai ❤️</div>
+  <div class="slide hidden" id="slide4">Chỉ cần em cười, mọi thứ đều đáng giá 😘</div>
+  <div class="slide hidden" id="slide5">Chúng ta sinh ra là để gặp nhau 💌</div>
+  <div class="slide hidden" id="slide6">Em là điều tuyệt vời nhất anh từng có 💫</div>
+  <div class="slide hidden" id="slide7">Cả thế giới chỉ cần có em ♥</div>
 
-  <!-- Nhạc nền -->
+  <!-- Nhạc nền (tuỳ chọn) -->
   <audio autoplay loop>
     <source src="music.mp3" type="audio/mpeg">
-    Trình duyệt không hỗ trợ phát nhạc.
   </audio>
 
   <script>
-    const texts = [
-      "Cảm ơn vì em đã đến 💖",
-      "Anh sẽ luôn bên cạnh em 💑",
-      "Mỗi ngày bên em là một ngày hạnh phúc 🌈",
-      "Yêu em hơn hôm qua nhưng không bằng ngày mai ❤️",
-      "Chỉ cần em cười, mọi thứ đều đáng giá 😘",
-      "Chúng ta sinh ra là để gặp nhau 💌",
-      "Em là điều tuyệt vời nhất anh từng có 💫"
-    ];
-
+    const slides = document.querySelectorAll('.slide');
     let current = 0;
-    const textEl = document.getElementById("text");
 
-    function nextText() {
-      current = (current + 1) % texts.length;
-      textEl.innerText = texts[current];
+    function showSlide(next) {
+      if (next < 0 || next >= slides.length) return;
+
+      slides[current].classList.add('hidden');
+      slides[next].classList.remove('hidden');
+      current = next;
     }
 
-    function prevText() {
-      current = (current - 1 + texts.length) % texts.length;
-      textEl.innerText = texts[current];
-    }
-
-    // Bắt sự kiện vuốt
+    // Vuốt màn hình để chuyển slide
     let startY = 0;
-    document.addEventListener("touchstart", (e) => {
+
+    document.addEventListener('touchstart', (e) => {
       startY = e.touches[0].clientY;
     });
 
-    document.addEventListener("touchend", (e) => {
+    document.addEventListener('touchend', (e) => {
       const endY = e.changedTouches[0].clientY;
-      if (startY - endY > 50) {
-        nextText(); // vuốt lên
-      } else if (endY - startY > 50) {
-        prevText(); // vuốt xuống
-      }
+      if (startY - endY > 50) showSlide(current + 1);     // Vuốt lên
+      else if (endY - startY > 50) showSlide(current - 1); // Vuốt xuống
     });
 
-    // Rơi chữ trái tim + ký tự lãng mạn
+    // Click chuột cũng chuyển (test trên máy tính)
+    document.addEventListener('click', () => {
+      showSlide((current + 1) % slides.length);
+    });
+
+    // Hiệu ứng chữ rơi
     function createFallingChar() {
-      const charList = ["♥", "💖", "💗", "Em", "Yêu", "Anh"];
+      const chars = ["♥", "💖", "💗", "Yêu", "Em", "Anh"];
       const char = document.createElement("div");
       char.classList.add("falling-char");
       char.style.left = Math.random() * 100 + "vw";
       char.style.animationDuration = (2 + Math.random() * 3) + "s";
-      char.innerText = charList[Math.floor(Math.random() * charList.length)];
+      char.innerText = chars[Math.floor(Math.random() * chars.length)];
       document.body.appendChild(char);
       setTimeout(() => char.remove(), 5000);
     }
 
-    setInterval(createFallingChar, 300);
+    setInterval(createFallingChar, 200);
   </script>
-
 </body>
 </html>
