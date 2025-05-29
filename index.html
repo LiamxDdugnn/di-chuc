@@ -2,49 +2,97 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gửi đến người đặc biệt ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quân ♥ Phương</title>
   <style>
     body {
       background-color: black;
       color: white;
-      text-align: center;
-      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
       overflow: hidden;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
     }
+
     h1 {
       color: #ff00ff;
       font-size: 2.5em;
-      margin-top: 100px;
+      margin-top: 60px;
       animation: glow 2s infinite alternate;
     }
-    p {
-      font-size: 1.3em;
-      margin: 20px;
-      color: #fff;
+
+    #message {
+      font-size: 1.5em;
+      margin: 20px auto;
+      width: 90%;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .heart {
-      color: red;
-      animation: pulse 1s infinite;
-    }
+
     @keyframes glow {
       from { text-shadow: 0 0 10px #ff00ff; }
       to { text-shadow: 0 0 30px #ff00ff; }
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
+
+    .falling-text {
+      position: absolute;
+      top: -50px;
+      font-size: 20px;
+      color: pink;
+      animation: fall 4s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { top: -50px; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Liam <span class="heart">♥</span> MuaDongTokyo</h1>
-  <p>Cảm ơn vì em đã đến trong cuộc đời anh 🌟</p>
-  <p>Anh sẽ luôn bên cạnh em, dù bất cứ chuyện gì xảy ra ❤️</p>
+
+  <h1>Quân <span style="color: red;">♥</span> Phương</h1>
+  <div id="message">Cảm ơn vì em đã đến 💖</div>
+
   <audio autoplay loop>
     <source src="music.mp3" type="audio/mpeg">
     Trình duyệt của bạn không hỗ trợ âm thanh.
   </audio>
+
+  <script>
+    const messages = [
+      "Cảm ơn vì em đã đến 💖",
+      "Anh sẽ luôn bên cạnh em 💑",
+      "Mỗi ngày bên em là một ngày hạnh phúc 🌈",
+      "Yêu em hơn hôm qua nhưng không bằng ngày mai ❤️",
+      "Chỉ cần em cười, mọi thứ đều đáng giá 😘"
+    ];
+
+    let index = 0;
+    const messageDiv = document.getElementById('message');
+
+    function changeMessage() {
+      index = (index + 1) % messages.length;
+      messageDiv.innerText = messages[index];
+    }
+
+    document.body.addEventListener('click', changeMessage);
+    document.body.addEventListener('touchstart', changeMessage);
+
+    // tạo hiệu ứng chữ rơi
+    function createFallingText() {
+      const phrases = ["♥", "Yêu", "Em", "Nhiều", "Lắm", "💖"];
+      const text = document.createElement('div');
+      text.classList.add('falling-text');
+      text.style.left = Math.random() * 100 + "vw";
+      text.innerText = phrases[Math.floor(Math.random() * phrases.length)];
+      document.body.appendChild(text);
+      setTimeout(() => text.remove(), 5000);
+    }
+
+    setInterval(createFallingText, 300);
+  </script>
+
 </body>
 </html>
