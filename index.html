@@ -6,29 +6,39 @@
   <title>Quân ♥ Phương</title>
   <style>
     body {
-      background-color: black;
-      color: white;
       margin: 0;
+      padding: 0;
       overflow: hidden;
+      background-color: black;
       font-family: 'Courier New', Courier, monospace;
+      color: #fff;
       text-align: center;
     }
 
-    h1 {
-      color: #ff00ff;
-      font-size: 2.5em;
-      margin-top: 60px;
-      animation: glow 2s infinite alternate;
-    }
-
-    #message {
-      font-size: 1.5em;
-      margin: 20px auto;
-      width: 90%;
-      height: 100px;
+    .container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: transform 0.6s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: magenta;
+      animation: glow 2s infinite alternate;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.3em;
+      color: white;
+      max-width: 80%;
     }
 
     @keyframes glow {
@@ -36,62 +46,88 @@
       to { text-shadow: 0 0 30px #ff00ff; }
     }
 
-    .falling-text {
+    .falling-char {
       position: absolute;
-      top: -50px;
+      top: -40px;
       font-size: 20px;
       color: pink;
-      animation: fall 4s linear infinite;
+      animation: fall linear forwards;
     }
 
     @keyframes fall {
-      0% { top: -50px; opacity: 1; }
-      100% { top: 100vh; opacity: 0; }
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Quân <span style="color: red;">♥</span> Phương</h1>
-  <div id="message">Cảm ơn vì em đã đến 💖</div>
+  <!-- Nội dung từng trang -->
+  <div class="container" id="page">
+    <h1>Quân ♥ Phương</h1>
+    <p id="text">Cảm ơn vì em đã đến 💖</p>
+  </div>
 
+  <!-- Nhạc nền -->
   <audio autoplay loop>
     <source src="music.mp3" type="audio/mpeg">
-    Trình duyệt của bạn không hỗ trợ âm thanh.
+    Trình duyệt không hỗ trợ phát nhạc.
   </audio>
 
   <script>
-    const messages = [
+    const texts = [
       "Cảm ơn vì em đã đến 💖",
       "Anh sẽ luôn bên cạnh em 💑",
       "Mỗi ngày bên em là một ngày hạnh phúc 🌈",
       "Yêu em hơn hôm qua nhưng không bằng ngày mai ❤️",
-      "Chỉ cần em cười, mọi thứ đều đáng giá 😘"
+      "Chỉ cần em cười, mọi thứ đều đáng giá 😘",
+      "Chúng ta sinh ra là để gặp nhau 💌",
+      "Em là điều tuyệt vời nhất anh từng có 💫"
     ];
 
-    let index = 0;
-    const messageDiv = document.getElementById('message');
+    let current = 0;
+    const textEl = document.getElementById("text");
 
-    function changeMessage() {
-      index = (index + 1) % messages.length;
-      messageDiv.innerText = messages[index];
+    function nextText() {
+      current = (current + 1) % texts.length;
+      textEl.innerText = texts[current];
     }
 
-    document.body.addEventListener('click', changeMessage);
-    document.body.addEventListener('touchstart', changeMessage);
-
-    // tạo hiệu ứng chữ rơi
-    function createFallingText() {
-      const phrases = ["♥", "Yêu", "Em", "Nhiều", "Lắm", "💖"];
-      const text = document.createElement('div');
-      text.classList.add('falling-text');
-      text.style.left = Math.random() * 100 + "vw";
-      text.innerText = phrases[Math.floor(Math.random() * phrases.length)];
-      document.body.appendChild(text);
-      setTimeout(() => text.remove(), 5000);
+    function prevText() {
+      current = (current - 1 + texts.length) % texts.length;
+      textEl.innerText = texts[current];
     }
 
-    setInterval(createFallingText, 300);
+    // Bắt sự kiện vuốt
+    let startY = 0;
+    document.addEventListener("touchstart", (e) => {
+      startY = e.touches[0].clientY;
+    });
+
+    document.addEventListener("touchend", (e) => {
+      const endY = e.changedTouches[0].clientY;
+      if (startY - endY > 50) {
+        nextText(); // vuốt lên
+      } else if (endY - startY > 50) {
+        prevText(); // vuốt xuống
+      }
+    });
+
+    // Rơi chữ trái tim + ký tự lãng mạn
+    function createFallingChar() {
+      const charList = ["♥", "💖", "💗", "Em", "Yêu", "Anh"];
+      const char = document.createElement("div");
+      char.classList.add("falling-char");
+      char.style.left = Math.random() * 100 + "vw";
+      char.style.animationDuration = (2 + Math.random() * 3) + "s";
+      char.innerText = charList[Math.floor(Math.random() * charList.length)];
+      document.body.appendChild(char);
+      setTimeout(() => char.remove(), 5000);
+    }
+
+    setInterval(createFallingChar, 300);
   </script>
 
 </body>
